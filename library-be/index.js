@@ -15,6 +15,13 @@ app.get("/books", (req, res) => {
   res.json(books);
 });
 
+// Get a book by id
+app.get("/books/:id", (req, res) => {
+  const { id } = req.params;
+  const result = books.find((book) => book.id.toString() === id);
+  res.json(result);
+});
+
 // Add a new book
 app.post("/books", (req, res) => {
   const book = { id: Date.now(), ...req.body };
