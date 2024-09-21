@@ -4,11 +4,12 @@ import { Book } from "../types";
 import { getAllBooks } from "../api/bookApi";
 
 const useBooks = () => {
-  const { data, error } = useSWR<Book[]>("/books", getAllBooks);
+  const { data, isLoading, error } = useSWR<Book[]>("/books", getAllBooks);
 
   return {
-    data,
-    error,
+    books: data,
+    isLoading,
+    isError: error,
   };
 };
 

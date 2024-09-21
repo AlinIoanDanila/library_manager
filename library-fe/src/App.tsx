@@ -1,21 +1,18 @@
-import { Button } from "@mui/material";
-import axios from "axios";
-import useSWR from "swr";
-
+import { StyledEngineProvider } from "@mui/material";
+import BookForm from "./components/BookForm/BookForm";
+import BookList from "./components/BookList/BookList";
 import "./styles/normalize.css";
 import "./styles/style.css";
 
-const fetcher = (url: string) => axios.get(url);
+// import BookForm from "./components/BookForm/BookForm";
+// import BookCard from "./components/BookCard/BookCard";
 
 const App = () => {
-  const { data: user } = useSWR("http://localhost:3000/", fetcher);
-
   return (
-    <>
-      <p>{user && <>{user.data.name}</>}</p>
-      <p>Library Manager</p>
-      <Button variant="text">Yo</Button>
-    </>
+    <StyledEngineProvider injectFirst>
+      <BookForm />
+      <BookList />
+    </StyledEngineProvider>
   );
 };
 
