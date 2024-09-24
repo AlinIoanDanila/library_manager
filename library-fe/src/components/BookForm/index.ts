@@ -1,1 +1,2 @@
-export * from "./BookForm";
+export * from "./EditBookForm";
+export * from "./DeleteBookForm";

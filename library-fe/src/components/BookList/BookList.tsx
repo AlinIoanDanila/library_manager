@@ -1,9 +1,10 @@
-import { Fragment } from "react/jsx-runtime";
-import useBooks from "../../hooks/useBooks";
-import { Book } from "../../types";
-import BookCard from "../BookCard/BookCard";
+import { Grid2 } from "@mui/material";
 
-const BookList = () => {
+import { Book } from "../../types";
+import { BookCard } from "../BookCard";
+import { useBooks } from "../../hooks/";
+
+export const BookList = () => {
   const { books, isError, isLoading } = useBooks();
 
   if (isError || books?.length === 0) return <div>Books not found</div>;
@@ -13,13 +14,11 @@ const BookList = () => {
       {isLoading ? (
         <div>Books loading</div>
       ) : (
-        <div>
+        <Grid2 className="book-list" spacing={3} container>
           {books?.map((book: Book) => (
-            <Fragment key={book.id}>
-              <BookCard {...book} />
-            </Fragment>
+            <BookCard key={book.id} {...book} />
           ))}
-        </div>
+        </Grid2>
       )}
     </>
   );

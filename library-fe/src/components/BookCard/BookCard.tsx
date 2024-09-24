@@ -1,36 +1,50 @@
-import { Button, Card, Typography } from "@mui/material";
-import { Book } from "../../types";
-import { deleteBook, updateBook } from "../../api/bookApi";
-// import { red } from "@mui/material/colors";
+import { useState } from "react";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { Card, CardActions, CardContent, Container, IconButton, Typography } from "@mui/material";
 
-const BookCard = (props: Book) => {
+import { Book } from "../../types";
+import { EditBookForm } from "../BookForm";
+import { DeleteBookForm } from "../BookForm/DeleteBookForm";
+
+export const BookCard = (props: Book) => {
+  const [isEditFormOpen, setIsEditFormOpen] = useState<boolean>(false);
+  const [isDeleteFormOpen, setIsDeleteFormOpen] = useState<boolean>(false);
+
   const handleDelete = () => {
-    deleteBook(props.id);
+    setIsDeleteFormOpen(true);
   };
 
   const handleEdit = () => {
-    const newBook: Book = {
-      id: Date.now(),
-      author: "123",
-      brief: "123",
-      genre: "123",
-      title: "123",
-    };
-    updateBook(props.id, newBook);
+    setIsEditFormOpen(true);
   };
 
   return (
-    <Card className="book-card">
-      <Typography gutterBottom variant="h5" component="div">
-        {props.title}
-      </Typography>
-      <Typography variant="body2">{props.author}</Typography>
-      <Typography variant="body2">{props.genre}</Typography>
-      <Typography variant="body2">{props.brief}</Typography>
-      <Button onClick={handleDelete}>Delete</Button>
-      <Button onClick={handleEdit}>Edit</Button>
-    </Card>
+    <>
+      <EditBookForm isFormOpen={isEditFormOpen} setIsOpen={setIsEditFormOpen} bookInfo={props} id={props.id} />
+      <DeleteBookForm isFormOpen={isDeleteFormOpen} setIsOpen={setIsDeleteFormOpen} id={props.id} />
+
+      <Card className="book-card">
+        <CardContent className="book-card__content">
+          <Container className="123">
+            <Typography className="book-card__title" variant="h6" component="div">
+              {props.title}
+            </Typography>
+            <Typography variant="body2">by {props.author}</Typography>
+            <Typography variant="body2">{props.genre}</Typography>
+            <Typography variant="body2">{props.brief}</Typography>
+          </Container>
+        </CardContent>
+
+        <CardActions className="book-card__action-area">
+          <IconButton onClick={() => handleEdit()}>
+            <EditIcon></EditIcon>
+          </IconButton>
+          <IconButton onClick={handleDelete}>
+            <DeleteIcon />
+          </IconButton>
+        </CardActions>
+      </Card>
+    </>
   );
 };
-
-export default BookCard;
