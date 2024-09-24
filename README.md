@@ -23,13 +23,11 @@ cd library_manager
 
 ## Install Frontend part
 - cd library-fe
-- npm i
-- npm run dev (using vite: https://vitejs.dev/guide/)
+- npm i (using vite: https://vitejs.dev/guide/)
 
 ## Install Backend part
 - cd library-be
 - npm i
-- npm run dev 
 
 ## Run the application
 Open library_manager folder and run two terminals
