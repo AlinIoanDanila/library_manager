@@ -5,3 +5,10 @@ export interface Book {
   genre: string;
   brief: string;
 }
+
+export interface BookForm {
+  title: string;
+  author: string;
+  genre: string;
+  brief: string;
+}
