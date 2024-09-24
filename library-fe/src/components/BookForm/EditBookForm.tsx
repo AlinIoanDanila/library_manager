@@ -1,31 +1,36 @@
 import { useFormik } from "formik";
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } from "@mui/material";
 
 import { useBooks } from "../../hooks";
-import { Book, BookForm } from "../../types";
+import { BookForm, IEditBookForm } from "../../types";
 
-type IEditBookForm = {
-  isFormOpen: boolean;
-  bookInfo?: BookForm;
-  id?: number;
-  handleEdit?(id: number, book: Book): void;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
-};
+const DEFAULT_VALUES: BookForm = { author: "", brief: "", genre: "", title: "" };
 
+/**
+ * Component to both add and edit a book
+ * If bookID is provided, the request will edit the book with the specified ID, else it will create a new book
+ */
 export const EditBookForm: React.FC<IEditBookForm> = ({ isFormOpen, bookInfo, id, setIsOpen }: IEditBookForm) => {
   const { addNewBook, editBook } = useBooks();
-  const [values, setValues] = useState<BookForm>(bookInfo || { author: "", brief: "", genre: "", title: "" });
+  const [values, setValues] = useState<BookForm>(bookInfo || DEFAULT_VALUES);
+
+  //Reset form to initial values
+  const reset = () => {
+    setValues(DEFAULT_VALUES);
+    setIsOpen(false);
+  };
 
   const formik = useFormik({
     onSubmit: () => {
       if (id) {
         editBook(id, values);
-        setIsOpen(false);
+        reset();
         return;
       } else {
         addNewBook(values);
-        setIsOpen(false);
+        reset();
+        return;
       }
     },
     initialValues: values as BookForm,

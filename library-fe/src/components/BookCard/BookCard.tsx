@@ -7,7 +7,7 @@ import { Book } from "../../types";
 import { EditBookForm } from "../BookForm";
 import { DeleteBookForm } from "../BookForm/DeleteBookForm";
 
-export const BookCard = (props: Book) => {
+export const BookCard: React.FC<Book> = (props: Book) => {
   const [isEditFormOpen, setIsEditFormOpen] = useState<boolean>(false);
   const [isDeleteFormOpen, setIsDeleteFormOpen] = useState<boolean>(false);
 
@@ -22,21 +22,32 @@ export const BookCard = (props: Book) => {
   return (
     <>
       <EditBookForm isFormOpen={isEditFormOpen} setIsOpen={setIsEditFormOpen} bookInfo={props} id={props.id} />
-      <DeleteBookForm isFormOpen={isDeleteFormOpen} setIsOpen={setIsDeleteFormOpen} id={props.id} />
+      <DeleteBookForm
+        id={props.id}
+        bookTitle={props.title}
+        isFormOpen={isDeleteFormOpen}
+        setIsOpen={setIsDeleteFormOpen}
+      />
 
       <Card className="book-card">
-        <CardContent className="book-card__content">
-          <Container className="123">
-            <Typography className="book-card__title" variant="h6" component="div">
+        <CardContent className="book-card-container">
+          <Container className="book-card-content">
+            <Typography className="book-card-title" variant="h6" component="div">
               {props.title}
             </Typography>
-            <Typography variant="body2">by {props.author}</Typography>
-            <Typography variant="body2">{props.genre}</Typography>
-            <Typography variant="body2">{props.brief}</Typography>
+            <Typography className="author-font" variant="body2">
+              by {props.author}
+            </Typography>
+            <Typography className="genre-box" variant="body2">
+              {props.genre}
+            </Typography>
+            <Typography className="brief-text" variant="body2">
+              {props.brief}
+            </Typography>
           </Container>
         </CardContent>
 
-        <CardActions className="book-card__action-area">
+        <CardActions className="book-card-action-area">
           <IconButton onClick={() => handleEdit()}>
             <EditIcon></EditIcon>
           </IconButton>

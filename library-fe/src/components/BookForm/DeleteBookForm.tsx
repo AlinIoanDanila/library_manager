@@ -1,17 +1,14 @@
-import { Dispatch, SetStateAction } from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 
 import { useBooks } from "../../hooks";
+import { IDeleteBookForm } from "../../types";
 
-export const DeleteBookForm = ({
+export const DeleteBookForm: React.FC<IDeleteBookForm> = ({
   id,
   isFormOpen,
   setIsOpen,
-}: {
-  id: number;
-  isFormOpen: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
-}) => {
+  bookTitle,
+}: IDeleteBookForm) => {
   const { removeBook } = useBooks();
 
   const handleSubmit = () => {
@@ -24,7 +21,7 @@ export const DeleteBookForm = ({
 
   return (
     <Dialog open={isFormOpen}>
-      <DialogTitle>Are you sure you want to delete this book?</DialogTitle>
+      <DialogTitle>Are you sure you want to delete "{bookTitle}"?</DialogTitle>
       <DialogContent>
         <form onSubmit={handleSubmit}>
           <DialogActions>

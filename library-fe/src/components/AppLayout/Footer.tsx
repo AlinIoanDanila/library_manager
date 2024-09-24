@@ -1,10 +1,8 @@
 import { Typography } from "@mui/material";
 
-export const Footer = () => {
-  const getCurrentYear = () => {
-    return new Date().getFullYear();
-  };
+import { getCurrentYear } from "../../utils";
 
+export const Footer = () => {
   return (
     <footer>
       <Typography variant="caption">© {getCurrentYear()} Personal Library Manager</Typography>
